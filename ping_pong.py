@@ -40,7 +40,6 @@ window.fill(BACK)
 
 clock = time.Clock()
 
-
 while GAME == True:
 
     for e in event.get():
@@ -49,3 +48,4 @@ while GAME == True:
 
     display.update()
     clock.tick(FPS)
+
