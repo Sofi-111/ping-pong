@@ -19,4 +19,5 @@ while GAME == True:
             GAME = False
 
     display.update()
+
     clock.tick(FPS)
