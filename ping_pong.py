@@ -9,6 +9,9 @@ FINISH = False
 SPEED_X = 3
 SPEED_Y = 3
 RED = (225, 0, 0)
+BLACK = (0, 0, 0)
+CHET1 = 0
+CHET2 = 0
 
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, player_width, player_hight, player_speed):
@@ -45,9 +48,10 @@ window.fill(BACK)
 clock = time.Clock()
 
 font.init()
-font = font.Font(None, 70)
-lose1 = font.render('Игрок 1 проиграл!', True, RED)
-lose2 = font.render('Игрок 2 проиграл!', True, RED)
+font1 = font.Font(None, 70)
+font2 = font.Font(None, 35)
+lose1 = font1.render('Игрок 1 проиграл!', True, RED)
+lose2 = font1.render('Игрок 2 проиграл!', True, RED)
 
 #создание ракеток и мяча
 racket1 = Player('images/bullet.png', 30, 200, 50, 150, 4)
@@ -77,12 +81,27 @@ while GAME == True:
         SPEED_X *= -1
     
     if ball.rect.x < 0:
+        CHET1 += 1
+        ball.kill()
+        ball = GameSprite('images/asteroid.png', 330, 250, 50, 50, 4)
+
+    if ball.rect.x > WIN_WIDTH:
+        CHET2 += 1
+        ball.kill()
+        ball = GameSprite('images/asteroid.png', 330, 250, 50, 50, 4)
+
+    if CHET1 == 5:
         FINISH = True
         window.blit(lose1, (160, 200))
 
-    if ball.rect.x > WIN_WIDTH:
+    if CHET2 == 5:
         FINISH = True
         window.blit(lose2, (160, 200))
+
+    chet1 = font2.render('Счёт: ' + str(CHET1), True, BLACK)
+    chet2 = font2.render('Счёт: ' + str(CHET2), True, BLACK)
+    window.blit(chet1, (30, 30))
+    window.blit(chet2, (600, 30))
 
     display.update()
     clock.tick(FPS)
