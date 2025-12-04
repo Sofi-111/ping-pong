@@ -8,6 +8,7 @@ BACK = (180, 230, 255)
 FINISH = False
 SPEED_X = 3
 SPEED_Y = 3
+RED = (225, 0, 0)
 
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, player_width, player_hight, player_speed):
@@ -43,6 +44,11 @@ window.fill(BACK)
 
 clock = time.Clock()
 
+font.init()
+font = font.Font(None, 70)
+lose1 = font.render('Игрок 1 проиграл!', True, RED)
+lose2 = font.render('Игрок 2 проиграл!', True, RED)
+
 #создание ракеток и мяча
 racket1 = Player('images/bullet.png', 30, 200, 50, 150, 4)
 racket2 = Player('images/bullet.png', 620, 200, 50, 150, 4)
@@ -69,7 +75,14 @@ while GAME == True:
 
     if sprite.collide_rect(racket1, ball) or sprite.collide_rect(racket2, ball):
         SPEED_X *= -1
+    
+    if ball.rect.x < 0:
+        FINISH = True
+        window.blit(lose1, (160, 200))
+
+    if ball.rect.x > WIN_WIDTH:
+        FINISH = True
+        window.blit(lose2, (160, 200))
 
     display.update()
     clock.tick(FPS)
-
