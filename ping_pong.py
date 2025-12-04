@@ -67,5 +67,9 @@ while GAME == True:
     if ball.rect.y > WIN_HEIGH- 50 or ball.rect.y < 0:
         SPEED_Y *= -1
 
+    if sprite.collide_rect(racket1, ball) or sprite.collide_rect(racket2, ball):
+        SPEED_X *= -1
+
     display.update()
     clock.tick(FPS)
+
