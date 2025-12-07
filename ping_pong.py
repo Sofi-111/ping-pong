@@ -12,6 +12,7 @@ RED = (225, 0, 0)
 BLACK = (0, 0, 0)
 CHET1 = 0
 CHET2 = 0
+AMOUNT_SPEED = 0
 
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, player_width, player_hight, player_speed):
@@ -54,8 +55,8 @@ lose1 = font1.render('Игрок 1 проиграл!', True, RED)
 lose2 = font1.render('Игрок 2 проиграл!', True, RED)
 
 #создание ракеток и мяча
-racket1 = Player('images/bullet.png', 30, 200, 50, 150, 4)
-racket2 = Player('images/bullet.png', 620, 200, 50, 150, 4)
+racket1 = Player('images/bullet.png', 20, 200, 50, 150, 4)
+racket2 = Player('images/bullet.png', 640, 200, 50, 150, 4)
 ball = GameSprite('images/asteroid.png', 330, 250, 50, 50, 4)
 
 while GAME == True:
@@ -79,6 +80,12 @@ while GAME == True:
 
     if sprite.collide_rect(racket1, ball) or sprite.collide_rect(racket2, ball):
         SPEED_X *= -1
+        AMOUNT_SPEED += 1
+
+    if AMOUNT_SPEED >= 4:
+        SPEED_X += 1
+        SPEED_Y += 1
+        AMOUNT_SPEED = 0
     
     if ball.rect.x < 0:
         CHET1 += 1
